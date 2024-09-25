@@ -443,12 +443,13 @@ initMap();
 const socket = new WebSocket("https://capstone02-96071185b037.herokuapp.com"); //TODO: Link to backend
 
 // 當連線開啟時，發送資料給伺服器
-socket.onopen = () => {
+socket.addEventListener("open", (event) => {
+  socket.send("From 0801.js");
   console.log("Connected to WebSocket");
-};
+});
 
 // 當收到伺服器的回應時
-socket.onmessage = async (event) => {
+socket.addEventListener("message", async (event) => {
   console.log("socket.onmessage");
   var outputData = JSON.parse(event.data); // 解析JSON对象 接收websocket_server
   //console.log(outputData);// 解析JSON数据中的变量
@@ -486,17 +487,17 @@ socket.onmessage = async (event) => {
 
   // 更新線上的彈窗訊息內容
   updateLines(phaseA, phaseB, phaseC);
-};
+});
 
 // 當連線關閉時
-socket.onclose = () => {
+socket.addEventListener("close", (event) => {
   console.log("WebSocket connection closed");
-};
+});
 
 // 當連線發生錯誤時
-socket.onerror = (error) => {
+socket.addEventListener("error", (error) => {
   console.error("WebSocket error:", error);
-};
+});
 
 // indicator: 0:do powerflow, 1:do HC, 2:do all, None: non
 function updateMapInfo(hc, remainhc, currentPenetration, indicator, voltageBoxPlot, utilisationBoxPlot) {
