@@ -440,7 +440,7 @@ function buildContent(property) {
 initMap();
 
 // 建立 WebSocket 連線
-const socket = new WebSocket("https://capstone02-96071185b037.herokuapp.com"); //TODO: Link to backend
+const socket = new WebSocket("wss://https://capstone02-96071185b037.herokuapp.com/"); //TODO: Link to backend
 
 // 當連線開啟時，發送資料給伺服器
 socket.addEventListener("open", (event) => {
