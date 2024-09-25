@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hosting Capacity Map</title>
+    <!-- 讓舊版本的瀏覽器支持新的 Web 標準或特性，從而確保網頁在各種瀏覽器上的兼容性 ----------------------------------------->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+    <!-- 插入圖標庫 https://fontawesome.com/ ----------------------------------------------------------------------->
+    <script src="https://use.fontawesome.com/releases/v6.2.0/js/all.js"></script>
+    <link rel="stylesheet" type="text/css" href="./Test.css" />
+    <script type="module" src="./0801.js"></script>
+    <script type="module" src="./properties.js"></script>
+    <!-- <script type="module" src="./styledMap.js"></script> -->
+  </head>
+
+  <body>
+    <!-- <h3>Solar PV Hosting Capacity Map</h3> -->
+    <!-- The div element for the map ----------------------------------------------------------------------------->
+    <div id="map"></div>
+
+    <script>
+      ((g) => {
+        var h,
+          a,
+          k,
+          p = "The Google Maps JavaScript API",
+          c = "google",
+          l = "importLibrary",
+          q = "__ib__",
+          m = document,
+          b = window;
+        b = b[c] || (b[c] = {});
+        var d = b.maps || (b.maps = {}),
+          r = new Set(),
+          e = new URLSearchParams(),
+          u = () =>
+            h ||
+            (h = new Promise(async (f, n) => {
+              await (a = m.createElement("script"));
+              e.set("libraries", [...r] + "");
+              for (k in g)
+                e.set(
+                  k.replace(/[A-Z]/g, (t) => "_" + t[0].toLowerCase()),
+                  g[k]
+                );
+              e.set("callback", c + ".maps." + q);
+              a.src = `https://maps.${c}apis.com/maps/api/js?` + e;
+              d[q] = f;
+              a.onerror = () => (h = n(Error(p + " could not load.")));
+              a.nonce = m.querySelector("script[nonce]")?.nonce || "";
+              m.head.append(a);
+            }));
+        d[l]
+          ? console.warn(p + " only loads once. Ignoring:", g)
+          : (d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)));
+      })(
+        // Add other bootstrap parameters as needed, using camel case.
+        // Use the 'v' parameter to indicate the version to load (alpha, beta, weekly, etc.)
+        { key: "AIzaSyBcJH9mYtRmqaxNAdJdEgHO67hJByDHBkM", v: "weekly" }
+      );
+    </script>
+
+    <div class="map-title">
+      <h2  id="map-title">Solar PV Hosting Capacity Map</h2>
+    </div>
+
+    <!-- <div class="map-author">
+      <h5  id="map-author"> By Yuchen Liu (1183200), Yifei Han (1370395)</h5>
+    </div> -->
+
+
+    <!-- The top right information -->
+    <div id="info-window">
+
+      <div id="HostingCapacity" title="HostingCapacity" class="info-item">
+        <i aria-hidden="true" class="fa fa-expand fa-lg HostingCapacity-color" title="HostingCapacity"></i>
+        <span class="fa-sr-only">hostingcapacity</span>
+        <span id="HostingCapacity-value">----</span>
+      </div>
+
+      <div id="RemainingCapacity" title="RemainingCapacity" class="info-item">
+        <i aria-hidden="true" class="fa fa-solar-panel fa-lg RemainingCapacity-color" title="RemainingCapacity"></i>
+        <span class="fa-sr-only">remainingcapacity</span>
+        <span id="RemainingCapacity-value">----</span>
+      </div>
+
+      <div id="Penetration" title="Penetration" class="info-item">
+        <i aria-hidden="true" class="fa fa-percent fa-lg Penetration-color" title="Penetration"></i>
+        <span class="fa-sr-only">penetration</span>
+        <span id="Penetration-value">----</span>
+      </div>
+      
+    </div>
+
+
+    
+    <!-- Button trigger modal -->
+    <button type="button" class="baseCaseButton" id="defineButton" >
+      Define Initial PV Installations
+    </button>
+   
+    <!-- Button trigger HostingCapacity -->
+    <button type="button" class="baseCaseButton" id="calculateHostingCapacity" disabled>
+      Calculate Hosting Capacity
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="calculator" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+
+        <div class="calculator-content">
+
+          <div class="calculator-header">
+            <h3 class="modal-title" id="initialPVinstallations">Define Initial PV Installations (KVA)</h3>
+            <!-- <button type="button" class="cross" id="cross" data-dismiss="calculator" aria-label="cross">
+              <span aria-hidden="true">&times;</span>
+            </button> -->
+          </div>
+
+          <div class="calculator-body">
+            <div class="house-value">
+
+              <div class="PV_input">
+                <div class="house-value-title">house 1 </div>
+                <input type="number" class="input-value" id='input-value-id-1' placeholder="PV size (KVA)" min="0" max="100">
+              </div>
+
+              <div class="PV_input">
+                <div class="house-value-title">house 2 </div>
+                <input type="number" class="input-value" id='input-value-id-2' placeholder="PV size (KVA)" min="0" max="100">
+              </div>
+
+              <div class="PV_input">
+                <div class="house-value-title">house 3 </div>
+                <input type="number" class="input-value" id='input-value-id-3' placeholder="PV size (KVA)" min="0" max="100">
+              </div>
+
+              <div class="PV_input">
+                <div class="house-value-title">house 4 </div>
+                <input type="number" class="input-value" id='input-value-id-4' placeholder="PV size (KVA)" min="0" max="100">
+              </div>
+
+              <div class="PV_input">
+                <div class="house-value-title">house 5 </div>
+                <input type="number" class="input-value" id='input-value-id-5' placeholder="PV size (KVA)" min="0" max="100">
+              </div>
+
+              <div class="PV_input">
+                <div class="house-value-title">house 6 </div>
+                <input type="number" class="input-value" id='input-value-id-6' placeholder="PV size (KVA)" min="0" max="100">
+              </div>
+
+              <div class="PV_input">
+                <div class="house-value-title">house 7 </div>
+                <input type="number" class="input-value" id='input-value-id-7' placeholder="PV size (KVA)" min="0" max="100">
+              </div>
+
+              <div class="PV_input">
+                <div class="house-value-title">house 8 </div>
+                <input type="number" class="input-value" id='input-value-id-8' placeholder="PV size (KVA)" min="0" max="100">
+              </div>
+
+            </div>
+
+            <div class="house-value">
+
+              <div class="PV_input">
+                <div class="house-value-title">house 9 </div>
+                <input type="number" class="input-value" id='input-value-id-9' placeholder="PV size (KVA)" min="0" max="100">
+              </div>
+
+              <div class="PV_input">
+                <div class="house-value-title">house 10 </div>
+                <input type="number" class="input-value" id='input-value-id-10' placeholder="PV size (KVA)" min="0" max="100">
+              </div>
+
+              <div class="PV_input">
+                <div class="house-value-title">house 11 </div>
+                <input type="number" class="input-value" id='input-value-id-11' placeholder="PV size (KVA)" min="0" max="100">
+              </div>
+
+              <div class="PV_input">
+                <div class="house-value-title">house 12 </div>
+                <input type="number" class="input-value" id='input-value-id-12' placeholder="PV size (KVA)" min="0" max="100">
+              </div>
+
+              <div class="PV_input">
+                <div class="house-value-title">house 13 </div>
+                <input type="number" class="input-value" id='input-value-id-13' placeholder="PV size (KVA)" min="0" max="100">
+              </div>
+
+              <div class="PV_input">
+                <div class="house-value-title">house 14 </div>
+                <input type="number" class="input-value" id='input-value-id-14' placeholder="PV size (KVA)" min="0" max="100">
+              </div>
+
+              <div class="PV_input">
+                <div class="house-value-title">house 15 </div>
+                <input type="number" class="input-value" id='input-value-id-15' placeholder="PV size (KVA)" min="0" max="100">
+              </div>
+
+              <div class="PV_input">
+                <div class="house-value-title">house 16 </div>
+                <input type="number" class="input-value" id='input-value-id-16' placeholder="PV size (KVA)" min="0" max="100">
+              </div>
+
+            </div>
+
+            <div class="house-value">
+
+              <div class="PV_input">
+                <div class="house-value-title">house 17 </div>
+                <input type="number" class="input-value" id='input-value-id-17' placeholder="PV size (KVA)" min="0" max="100">
+              </div>
+
+              <div class="PV_input">
+                <div class="house-value-title">house 18 </div>
+                <input type="number" class="input-value" id='input-value-id-18' placeholder="PV size (KVA)" min="0" max="100">
+              </div>
+
+              <div class="PV_input">
+                <div class="house-value-title">house 19 </div>
+                <input type="number" class="input-value" id='input-value-id-19' placeholder="PV size (KVA)" min="0" max="100">
+              </div>
+
+              <div class="PV_input">
+                <div class="house-value-title">house 20 </div>
+                <input type="number" class="input-value" id='input-value-id-20' placeholder="PV size (KVA)" min="0" max="100">
+              </div>
+
+              <div class="PV_input">
+                <div class="house-value-title">house 21 </div>
+                <input type="number" class="input-value" id='input-value-id-21' placeholder="PV size (KVA)" min="0" max="100">
+              </div>
+
+              <div class="PV_input">
+                <div class="house-value-title">house 22 </div>
+                <input type="number" class="input-value" id='input-value-id-22' placeholder="PV size (KVA)" min="0" max="100">
+              </div>
+
+              <div class="PV_input">
+                <div class="house-value-title">house 23 </div>
+                <input type="number" class="input-value" id='input-value-id-23' placeholder="PV size (KVA)" min="0" max="100">
+              </div>
+
+              <div class="PV_input">
+                <div class="house-value-title">house 24 </div>
+                <input type="number" class="input-value" id='input-value-id-24' placeholder="PV size (KVA)" min="0" max="100">
+              </div>
+
+            </div>
+
+            <div class="house-value">
+              <div class="PV_input">
+                <div class="house-value-title">house 25 </div>
+                <input type="number" class="input-value" id='input-value-id-25' placeholder="PV size (KVA)" min="0" max="100">
+              </div>
+
+              <div class="PV_input">
+                <div class="house-value-title">house 26 </div>
+                <input type="number" class="input-value" id='input-value-id-26' placeholder="PV size (KVA)" min="0" max="100">
+              </div>
+
+              <div class="PV_input">
+                <div class="house-value-title">house 27 </div>
+                <input type="number" class="input-value" id='input-value-id-27' placeholder="PV size (KVA)" min="0" max="100">
+              </div>
+
+              <div class="PV_input">
+                <div class="house-value-title">house 28 </div>
+                <input type="number" class="input-value" id='input-value-id-28' placeholder="PV size (KVA)" min="0" max="100">
+              </div>
+
+              <div class="PV_input">
+                <div class="house-value-title">house 29 </div>
+                <input type="number" class="input-value" id='input-value-id-29' placeholder="PV size (KVA)" min="0" max="100">
+              </div>
+
+              <div class="PV_input">
+                <div class="house-value-title">house 30 </div>
+                <input type="number" class="input-value" id='input-value-id-30' placeholder="PV size (KVA)" min="0" max="100">
+              </div>
+
+              <div class="PV_input">
+                <div class="house-value-title">house 31 </div>
+                <input type="number" class="input-value" id='input-value-id-31' placeholder="PV size (KVA)" min="0" max="100">
+              </div>
+
+            </div>
+              
+          </div>
+           
+          <div class="calculator-footer">
+
+            <!-- Button reset data -->
+            <button type="button"  id="resetButton" >
+              Reset
+            </button>
+            
+            <button type="button" id="close">
+              Save and Leave
+            </button>
+
+            <!-- Button calculate PowerFlow31 -->
+            <button type="button"  id="calculatePowerFlow31" >
+              Calculate Power Flow
+            </button>
+
+          </div>
+        </div>
+ 
+    </div>
+
+
+    <!-- Graph Popup Window -->
+    <div class="modal" id="graphBox" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+
+      <div class="calculator-content">
+
+        <div class="calculator-header">
+          <h3 class="modal-title" id="initialPVinstallations">Define Initial PV Installations (KVA)</h3>
+          <button type="button" class="cross" id="cross" data-dismiss="calculator" aria-label="cross">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="calculator-body">
+          <div  id='voltageBoxPlot' >
+            <img id="boxplot1" src="" style="width:100px;height:100px;">
+
+            <!-- <image id='boxplot2'  style="width:500px;height:250px;"/>  -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </body>
+</html>
