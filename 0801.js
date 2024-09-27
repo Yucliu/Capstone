@@ -440,13 +440,10 @@ function buildContent(property) {
 initMap();
 
 // 建立 WebSocket 連線
-//const socket = new WebSocket("ws://localhost:6789");
-//const socket = new WebSocket("https://capstone03-9e168018b6d0.herokuapp.com/"); //TODO: Link to backend
 const socket = new WebSocket("wss://capstone03-9e168018b6d0.herokuapp.com/");
 
 // 當連線開啟時，發送資料給伺服器
 socket.addEventListener("open", (event) => {
-  //socket.send("From 0801.js");
   console.log("Connected to WebSocket");
 });
 
@@ -523,13 +520,6 @@ function updateMapInfo(hc, remainhc, currentPenetration, indicator, voltageBoxPl
     document.getElementById("RemainingCapacity-value").textContent = `${remainingcapacity} %`;
     document.getElementById("Penetration-value").textContent = `${penetration} %`;
   }
-
-  // <image src="data:image/png;base64,${property.voltagePlot}" style="width:500px;height:250px;"/> 
-  
-  // const boxplot1 = document.getElementById("boxplot1");
-  // boxplot1.setAttribute("src", voltageBoxPlot);
-  // console.log(voltageBoxPlot);
-  // boxplot1.src = voltageBoxPlot; // Set the src with the Base64 data URL
 
 
 }
