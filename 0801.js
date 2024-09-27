@@ -441,7 +441,8 @@ initMap();
 
 // 建立 WebSocket 連線
 //const socket = new WebSocket("ws://localhost:6789");
-const socket = new WebSocket("https://capstone03-9e168018b6d0.herokuapp.com/"); //TODO: Link to backend
+//const socket = new WebSocket("https://capstone03-9e168018b6d0.herokuapp.com/"); //TODO: Link to backend
+const socket = new WebSocket("wss://capstone03-9e168018b6d0.herokuapp.com/");
 
 // 當連線開啟時，發送資料給伺服器
 socket.addEventListener("open", (event) => {
