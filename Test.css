@@ -373,7 +373,7 @@ button {
   height: 40px;
   width: 130px;/* 設置按鈕的寬度 */
   top: 10px;
-  left: 14%;
+  left: 15%;
   background-color: #A9A9A9;
   z-index: 1000;
   cursor:pointer;
