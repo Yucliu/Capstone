@@ -440,7 +440,7 @@ function buildContent(property) {
 initMap();
 
 // 建立 WebSocket 連線
-const socket = new WebSocket("https://capstone02-96071185b037.herokuapp.com/"); //TODO: Link to backend
+const socket = new WebSocket("https://capstone03-9e168018b6d0.herokuapp.com/"); //TODO: Link to backend
 
 // 當連線開啟時，發送資料給伺服器
 socket.addEventListener("open", (event) => {
@@ -475,18 +475,20 @@ socket.addEventListener("message", async (event) => {
 
   var indicator = outputData.indicator;
 
+  console.log("1");
   // 強制websocket晚一點回傳數值
   await new Promise((resolve) => setTimeout(resolve, 370));
 
-
+  console.log("2");
   // Update the top right information
   updateMapInfo(hc, remainhc, currentPenetration, indicator, voltageBoxPlot, utilisationBoxPlot);
-
+  console.log("3");
   // 用所有V更新markers資訊
   initMarkers(markers, V, P, Q, phaseA, phaseB, phaseC, Utilisation, hc, voltagePlots, utilisationPlot);
-
+  console.log("4");
   // 更新線上的彈窗訊息內容
   updateLines(phaseA, phaseB, phaseC);
+  console.log("5");
 });
 
 // 當連線關閉時
