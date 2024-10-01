@@ -416,7 +416,7 @@ button {
 
 #calculator {
   position: fixed;
-  height: 70%;
+  height: 75%;
   width: 70%;
   top: 20%;
   right: 15%;
@@ -436,6 +436,18 @@ button {
   align-items: center;
   border-bottom: 1px solid #dee2e6;
 }
+
+.introduciton{
+  margin-top:5px;
+  margin-bottom: 5px;
+}
+
+
+#initialPVinstallations{
+  margin-top:15px;
+  margin-bottom: 5px;
+}
+
 
 /* 身體部分樣式 */
 .calculator-body {
