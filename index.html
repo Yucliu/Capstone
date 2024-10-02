@@ -83,21 +83,24 @@
       <div id="RemainingCapacity" title="RemainingCapacity" class="info-item">
         <i aria-hidden="true" class="fa fa-solar-panel fa-lg RemainingCapacity-color" title="RemainingCapacity"></i>
         <span class="fa-sr-only">remainingcapacity</span>
-        <span class="variable-name">Remaining Capacity:</span> <!-- Variable name here -->
+        <span class="variable-name">Remaining Capacity:</span>
         <span id="RemainingCapacity-value">----</span>
       </div>
 
       <div id="Penetration" title="Penetration" class="info-item">
         <i aria-hidden="true" class="fa fa-percent fa-lg Penetration-color" title="Penetration"></i>
         <span class="fa-sr-only">penetration</span>
-        <span class="variable-name">PV Penetration:</span> <!-- Variable name here -->
+        <span class="variable-name">PV Penetration:</span>
         <span id="Penetration-value">----</span>
       </div>
       
     </div>
 
+    <!-- Introduction -->
+    <button type="button" class="baseCaseButton" id="introduction_btn" >
+      Introduction
+    </button>
 
-    
     <!-- Button trigger modal -->
     <button type="button" class="baseCaseButton" id="defineButton" >
       Define Initial PV Installations
@@ -109,17 +112,13 @@
     </button>
 
     <!-- Modal -->
-    <div class="modal fade" id="calculator" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="calculator" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="display: none;">
 
         <div class="calculator-content">
 
           <div class="calculator-header">
-            <h4 class="introduciton"> Welcome to the Hosting Capacity Map online tool. This platform allows you to input PV installation, after which we perform a power flow analysis to assess the hosting capacity of low voltage networks.
-              <br>In this case, we are analyzing a low voltage system consisting of 31 houses. Please define your PV installation settings to begin.
-            </h4>
+            <h3 class="modal-title" id="initialPVinstallations">Define Initial PV Installations (KVA)</h3>
           </div>
-
-          <h3 class="modal-title" id="initialPVinstallations">Define Initial PV Installations (KVA)</h3>
 
           <div class="calculator-body">
             <div class="house-value">
@@ -316,25 +315,25 @@
     </div>
 
 
-    <!-- Graph Popup Window -->
-    <div class="modal" id="graphBox" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <!-- Intro Popup Window -->
 
-      <div class="calculator-content">
+    <div id="introduction-popup" >
 
-        <div class="calculator-header">
-          <h3 class="modal-title" id="initialPVinstallations">Define Initial PV Installations (KVA)</h3>
-          <button type="button" class="cross" id="cross" data-dismiss="calculator" aria-label="cross">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
 
-        <div class="calculator-body">
-          <div  id='voltageBoxPlot' >
-            <img id="boxplot1" src="" style="width:100px;height:100px;">
+      <div id="introduction-header">
+        <button type="button"  class="fa-solid fa-circle-xmark" id="cross_btn" >
+    
+        </button>
 
-            <!-- <image id='boxplot2'  style="width:500px;height:250px;"/>  -->
+      </div>
+      <div class="popup-content" >
+          <h4 class="introduciton"> Welcome to the Hosting Capacity Map online tool. This platform allows you to input PV installation, after which we perform a power flow analysis to assess the hosting capacity of low voltage networks.
+            <br>In this case, we are analyzing a low voltage system consisting of 31 houses. Please define your PV installation settings to begin.
+          </h4>
+          
+          <div style="text-align: center;">
+            <img src="network.png" alt="Network Diagram" style="width: 80%; height: auto; margin-top: 20px;">
           </div>
-        </div>
       </div>
     </div>
 

@@ -366,14 +366,61 @@ button {
   background-color: #FFFFFF; 
 }
 
+#introduction_btn{
+  position: fixed;
+  height: 40px;
+  width: 95px;/* 設置按鈕的寬度 */
+  top: 10px;
+  left: 12.5%;
+  background-color: #A9A9A9;
+  z-index: 1000;
+  cursor:pointer;
+  
+}
 
+#introduction-popup {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border: 2px solid black;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+
+  z-index: 1000;
+
+  height: 70%;
+  width: 55%;
+  background-color: rgba(255, 255, 255, 1);
+
+
+}
+
+#introduction-header{
+  display: flex;
+  justify-content: flex-end; 
+  height: 30px;
+  width: 100%;
+  margin-bottom: 5px;
+
+}
+
+#cross_btn{
+  height: 25px;
+  width: 25px;
+  cursor:pointer;
+}
 
 #defineButton{
   position: fixed;
   height: 40px;
   width: 130px;/* 設置按鈕的寬度 */
   top: 10px;
-  left: 13%;
+  left: 19.5%;
   background-color: #A9A9A9;
   z-index: 1000;
   cursor:pointer;
@@ -385,7 +432,7 @@ button {
   height: 40px;
   width: 130px;/* 設置按鈕的寬度 */
   top: 10px;
-  left: 22%;
+  left: 28.7%;
   background-color: #A9A9A9;
   z-index: 1000;
   cursor:pointer;

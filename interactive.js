@@ -4,7 +4,8 @@ import { serviceLines } from "./serviceLines.js";
 // 儲存所有marker(house)跟property, lines
 let markers = [];
 let lines = [];
-let popup = 1;
+let popup = 0;
+let intro_popup = 1;
 let dataToSend = new Array(32).fill(0); // 31 pv sizes and 1 indicator 
 
 async function initMap() {
@@ -108,6 +109,18 @@ async function initMap() {
 
 
   // Base case 彈窗
+  const intro_button = document.getElementById("introduction_btn");
+  intro_button.addEventListener("click", function () {
+    togglePopupWindow(2);
+  }); 
+
+  const cross_button = document.getElementById("cross_btn");
+  cross_button.addEventListener("click", function () {
+    togglePopupWindow(2);
+  }); 
+
+
+
   const define_button = document.getElementById("defineButton");
   define_button.addEventListener("click", function () {
     togglePopupWindow(1);
@@ -119,11 +132,6 @@ async function initMap() {
     togglePopupWindow(1);
   });
 
-  const cross_button = document.getElementById("cross");
-  cross_button.addEventListener("click", function () {
-    updateData(0);
-    togglePopupWindow(2);
-  });
 
   //reset data
   const reset_button = document.getElementById("resetButton");
@@ -133,8 +141,6 @@ async function initMap() {
 
   //send and calculate PowerFlow31
   const calculate_PowerFlow_button = document.getElementById("calculatePowerFlow31");
-
-
   calculate_PowerFlow_button.addEventListener("click", function () {
     updateData(0);
     sentDataToBackend(0);
@@ -163,20 +169,22 @@ function togglePopupWindow(type) {
   if(type == 1){
     const popupWindow = document.getElementById("calculator");
     if (popup == 1) {
+      // none indicates invisible
       popupWindow.style.display = "none";
       popup = 0;
     } else {
+      // block indicates visible
       popupWindow.style.display = "block";
       popup = 1;
     }
   }else{
-    const popupWindow = document.getElementById("graphBox");
-    if (popup == 1) {
-      popupWindow.style.display = "none";
-      popup = 0;
+    const popupIntro = document.getElementById("introduction-popup");
+    if (intro_popup == 1) {
+      popupIntro.style.display = "none";
+      intro_popup = 0;
     } else {
-      popupWindow.style.display = "block";
-      popup = 1;
+      popupIntro.style.display = "block";
+      intro_popup = 1;
     }
   }
   
